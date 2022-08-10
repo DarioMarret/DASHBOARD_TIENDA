@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import Card from "@mui/material/Card";
 
 // Material Dashboard 2 React components
@@ -19,6 +18,7 @@ function OrdersOverview() {
       setCards(await TotalCard(dataCliente().id));
     })()
   }, []);
+  console.log(Cards)
   return (
     <Card sx={{ height: "100%" }}>
       <MDBox pt={3} px={3}>

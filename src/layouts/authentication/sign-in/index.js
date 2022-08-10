@@ -48,7 +48,7 @@ function Basic() {
     if (user.username !== '' || user.password !== '') {
       setLoading(true);
       try {
-        const { data } = await axios.post('https://rec.netbot.ec/v1/api/login_admin', user, {
+        const { data } = await axios.post('https://rec.netbot.ec/v1/api/login_tienda', user, {
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Basic YWRtaW46YWRtaW4=`
@@ -87,7 +87,7 @@ function Basic() {
           textAlign="center"
         >
           <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-            Iniciar Sesión <br /> NetBot  Adminstradores
+            Iniciar Sesión <br /> NetBot
           </MDTypography>
           <Grid container spacing={3} justifyContent="center" sx={{ mt: 1, mb: 2 }}>
           </Grid>

@@ -1,15 +1,13 @@
 import Dashboard from "layouts/dashboard";
 import Tables from "layouts/tables";
-import DomainIcon from '@mui/icons-material/Domain';
+import PaidIcon from '@mui/icons-material/Paid';
 import PageviewIcon from '@mui/icons-material/Pageview';
 import HistoryEduIcon from '@mui/icons-material/HistoryEdu';
-import StoreMallDirectoryIcon from '@mui/icons-material/StoreMallDirectory';
 
 // @mui icons
 import Icon from "@mui/material/Icon";
+import Pagar from "layouts/pagar/pagar";
 import Creditod from "layouts/historial";
-import Account from "layouts/Account";
-import Store from "layouts/Store";
 
 const routes = [
   {
@@ -22,19 +20,11 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Business",
-    key: "business",
-    icon: <DomainIcon />,
-    route: "/business",
-    component: <Account />,
-  },
-  {
-    type: "collapse",
-    name: "Stores",
-    key: "stores",
-    icon: <StoreMallDirectoryIcon />,
-    route: "/store",
-    component: <Store />,
+    name: "Pagar",
+    key: "pagar",
+    icon: <PaidIcon />,
+    route: "/pagar",
+    component: <Pagar />,
   },
   {
     type: "collapse",

@@ -1,4 +1,3 @@
-/* eslint-disable array-callback-return */
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 
@@ -9,6 +8,7 @@ import MDTypography from "components/MDTypography";
 // Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
+import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
 import React, { useEffect, useState } from "react";
 import { Button } from "@mui/material";
@@ -33,24 +33,23 @@ function Tables() {
     ],
     rows: userTienda
   }
-
+  
   if (userTienda != null) {
     userTienda.map((item, index) => {
-      item['key'] = index + 1;
-      item.accion = <>
-        <Button>
-          send <WhatsAppIcon fontSize="large" onClick={() => console.log(item.id)} />
-        </Button>
-      </>
+      console.log(item)
+        item['key'] = index + 1;
+        item.accion = <>
+            <Button>
+               send <WhatsAppIcon fontSize="large" onClick={() => console.log(item.id)} />
+            </Button>
+        </>
     })
-  }
-  
+}
   useEffect(() => {
     (async () => {
-      setuserTienda(await ListarTransaccionesTienda(dataCliente().id));
+        setuserTienda(await ListarTransaccionesTienda(dataCliente().id));
     })()
-  }, []);
-
+}, []);
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -73,6 +72,7 @@ function Tables() {
           </Grid>
         </Grid>
       </MDBox>
+      {/* <Footer /> */}
     </DashboardLayout>
   );
 }

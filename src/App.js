@@ -1,17 +1,36 @@
 import { useState, useEffect, useMemo } from "react";
+
+// react-router components
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+
+// @mui material components
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
+
+// Material Dashboard 2 React components
+
+// Material Dashboard 2 React example components
 import Sidenav from "examples/Sidenav";
+// Material Dashboard 2 React themes
 import theme from "assets/theme";
 import themeRTL from "assets/theme/theme-rtl";
+
+// Material Dashboard 2 React Dark Mode themes
 import themeDark from "assets/theme-dark";
 import themeDarkRTL from "assets/theme-dark/theme-rtl";
+
+// RTL plugins
 import rtlPlugin from "stylis-plugin-rtl";
 import { CacheProvider } from "@emotion/react";
 import createCache from "@emotion/cache";
+
+// Material Dashboard 2 React routes
 import routes from "routes";
+
+// Material Dashboard 2 React contexts
 import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "context";
+
+// Images
 import Basic from "layouts/authentication/sign-in";
 import AuthContext from "./context/AuthContext";
 import { dataCliente, getDatosUsuario, removeDatosUsuario, setDatosUsuario } from "./function/localstore/storeUsuario";
@@ -73,6 +92,10 @@ export default function App() {
     }
   };
 
+  // Change the openConfigurator state
+  const handleConfiguratorOpen = () => setOpenConfigurator(dispatch, !openConfigurator);
+
+  // Setting the dir attribute for the body element
   useEffect(() => {
     document.body.setAttribute("dir", direction);
   }, [direction]);
@@ -97,6 +120,7 @@ export default function App() {
     });
 
   const login = (data) => {
+    console.log(data)
     setDatosUsuario(data)
     setAuth(data)
   };
@@ -116,6 +140,7 @@ export default function App() {
     [auth]
   );
 
+
   return direction === "rtl" ? (
     <CacheProvider value={rtlCache}>
       <ThemeProvider theme={darkMode ? themeDarkRTL : themeRTL}>
@@ -129,7 +154,7 @@ export default function App() {
                   <Sidenav
                     color={sidenavColor}
                     // brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
-                    brandName={dataCliente().username}
+                    brandName={dataCliente().responsable}
                     routes={routes}
                     onMouseEnter={handleOnMouseEnter}
                     onMouseLeave={handleOnMouseLeave}
@@ -139,6 +164,7 @@ export default function App() {
               <Routes>
                 {getRoutes(routes)}
                 <Route path="*" element={<Navigate to="/dashboard" />} />
+                {/* <Route path="*" element={<Navigate to="/pagar" />} /> */}
               </Routes>
             </>
           }
@@ -157,7 +183,7 @@ export default function App() {
                 <Sidenav
                   color={sidenavColor}
                   // brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
-                  brandName={dataCliente().username}
+                  brandName={dataCliente().responsable}
                   routes={routes}
                   onMouseEnter={handleOnMouseEnter}
                   onMouseLeave={handleOnMouseLeave}
@@ -167,6 +193,7 @@ export default function App() {
             <Routes>
               {getRoutes(routes)}
               <Route path="*" element={<Navigate to="/dashboard" />} />
+              {/* <Route path="*" element={<Navigate to="/pagar" />} /> */}
 
             </Routes>
           </>

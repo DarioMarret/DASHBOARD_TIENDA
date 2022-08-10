@@ -226,6 +226,7 @@ export const TiendaCedula = async (cedula) => {
 }
 
 export const recharge = async (datos) => {
+    console.log(datos)
     try {
         const { data } = await axios.post(`${url}/api/recargar`,
             datos, {
@@ -262,7 +263,7 @@ export const Loginn = async (datos) => {
 
 export const ListarTransaccionesTienda = async (id) => {
     try {
-        const { data } = await axios.get(`${url}/api/transaciones_admin/${id}`,
+        const { data } = await axios.get(`${url}/api/transacciones/${id}`,
             {
                 headers: {
                     'Content-Type': 'application/json',
@@ -277,7 +278,7 @@ export const ListarTransaccionesTienda = async (id) => {
 
 export const ListarHistorialTienda = async (id) => {
     try {
-        const { data } = await axios.get(`${url}/api/listarhistorialcreditos/${id}`,
+        const { data } = await axios.get(`${url}/api/historialcredito/${id}`,
             {
                 headers: {
                     'Content-Type': 'application/json',
@@ -292,14 +293,14 @@ export const ListarHistorialTienda = async (id) => {
 
 export const SaldoActual = async (id) => {
     try {
-        const { data } = await axios.get(`${url}/api/saldostiendas/${id}`,
+        const { data } = await axios.get(`${url}/api/saldotiendas/${id}`,
             {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Basic YWRtaW46YWRtaW4=`
                 }
             });
-        return data.success ? data.data : false
+        return data.success ? data.data[0].saldos : false
     } catch (error) {
         console.warn(error);
     }
@@ -307,14 +308,14 @@ export const SaldoActual = async (id) => {
 
 export const TotalCard = async (id) => {
     try {
-        const { data } = await axios.get(`${url}/api/listarcard/${id}`,
+        const { data } = await axios.get(`${url}/api/totalcard/${id}`,
             {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Basic YWRtaW46YWRtaW4=`
                 }
             });
-        return data.success ? data.data[0] : false
+        return data.success ? data.data : false
     } catch (error) {
         console.warn(error);
     }
