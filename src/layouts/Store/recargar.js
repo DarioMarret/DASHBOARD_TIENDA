@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { Box, Button, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
@@ -34,7 +35,6 @@ function RechargeStores() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log();
         const response = await recharge({ ...tienda, transacion: NumeroAleatorio(), saldo, forma_pago: formaPago, banco: Banco });
         if (response) {
             alert("Transaccion exitosa");

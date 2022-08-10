@@ -226,7 +226,6 @@ export const TiendaCedula = async (cedula) => {
 }
 
 export const recharge = async (datos) => {
-    console.log(datos)
     try {
         const { data } = await axios.post(`${url}/api/recargar`,
             datos, {
@@ -270,7 +269,6 @@ export const ListarTransaccionesTienda = async (id) => {
                     'Authorization': `Basic YWRtaW46YWRtaW4=`
                 }
             });
-        console.log(data)
         return data.success ? data.data : false
     } catch (error) {
         console.warn(error);

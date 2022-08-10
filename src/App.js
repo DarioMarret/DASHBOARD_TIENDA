@@ -97,7 +97,6 @@ export default function App() {
     });
 
   const login = (data) => {
-    console.log(data)
     setDatosUsuario(data)
     setAuth(data)
   };

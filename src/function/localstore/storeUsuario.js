@@ -1,3 +1,5 @@
+/* eslint-disable eqeqeq */
+/* eslint-disable array-callback-return */
 import { dataClientes, usuario_local } from "../util/global";
 import jwt_decode from "jwt-decode";
 
