@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 import { useState, useEffect, useMemo } from "react";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
@@ -8,10 +9,10 @@ import themeRTL from "assets/theme/theme-rtl";
 import themeDark from "assets/theme-dark";
 import themeDarkRTL from "assets/theme-dark/theme-rtl";
 // import rtlPlugin from "stylis-plugin-rtl";
-import { CacheProvider } from "@emotion/react";
+// import { CacheProvider } from "@emotion/react";
 // import createCache from "@emotion/cache";
 import routes from "routes";
-import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "context";
+import { useMaterialUIController, setMiniSidenav } from "context";
 import Basic from "layouts/authentication/sign-in";
 import AuthContext from "./context/AuthContext";
 import { dataCliente, getDatosUsuario, removeDatosUsuario, setDatosUsuario } from "./function/localstore/storeUsuario";
@@ -22,14 +23,11 @@ export default function App() {
     miniSidenav,
     direction,
     layout,
-    openConfigurator,
     sidenavColor,
-    transparentSidenav,
-    whiteSidenav,
     darkMode,
   } = controller;
   const [onMouseEnter, setOnMouseEnter] = useState(false);
-  const [rtlCache, setRtlCache] = useState(null);
+  // const [rtlCache, setRtlCache] = useState(null);
   const { pathname } = useLocation();
   const [auth, setAuth] = useState(undefined);
   const [ReloadUser, setReloadUser] = useState(false);
@@ -119,7 +117,7 @@ export default function App() {
   );
 
   return direction === "rtl" ? (
-    <CacheProvider value={rtlCache}>
+    // <CacheProvider>
       <ThemeProvider theme={darkMode ? themeDarkRTL : themeRTL}>
         <AuthContext.Provider value={authData}>
           <CssBaseline />
@@ -146,7 +144,7 @@ export default function App() {
           }
         </AuthContext.Provider>
       </ThemeProvider>
-    </CacheProvider>
+    // </CacheProvider>
   ) : (
     <ThemeProvider theme={darkMode ? themeDark : theme}>
       <AuthContext.Provider value={authData}>
