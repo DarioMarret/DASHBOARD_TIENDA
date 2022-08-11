@@ -67,23 +67,21 @@ function DashboardNavbar({ absolute, light, isMini }) {
     // Remove event listener on cleanup
     return () => window.removeEventListener("scroll", handleTransparentNavbar);
   }, [dispatch, fixedNavbar]);
-
   const handleMiniSidenav = () => setMiniSidenav(dispatch, !miniSidenav);
 
   const { logout } = useAuth()
+  // Styles for the navbar icons
+  const iconsStyle = ({ palette: { dark, white, text }, functions: { rgba } }) => ({
+    color: () => {
+      let colorValue = light || darkMode ? white.main : dark.main;
 
-    // Styles for the navbar icons
-    const iconsStyle = ({ palette: { dark, white, text }, functions: { rgba } }) => ({
-      color: () => {
-        let colorValue = light || darkMode ? white.main : dark.main;
-  
-        if (transparentNavbar && !light) {
-          colorValue = darkMode ? rgba(text.main, 0.6) : text.main;
-        }
-  
-        return colorValue;
-      },
-    });
+      if (transparentNavbar && !light) {
+        colorValue = darkMode ? rgba(text.main, 0.6) : text.main;
+      }
+
+      return colorValue;
+    },
+  });
 
   return (
     <AppBar
@@ -101,10 +99,10 @@ function DashboardNavbar({ absolute, light, isMini }) {
               <MDInput label="Search here" />
             </MDBox>
             <MDBox color={light ? "white" : "inherit"}>
-                <Button sx={navbarIconButton} size="small" disableRipple onClick={logout}>
-                  Cerrar
-                </Button>
-                <IconButton
+              <Button sx={navbarIconButton} size="small" disableRipple onClick={logout}>
+                Cerrar
+              </Button>
+              <IconButton
                 size="small"
                 disableRipple
                 color="inherit"

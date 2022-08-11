@@ -18,7 +18,7 @@ import { TotalCard } from "function/util/Query";
 import { dataCliente } from "function/localstore/storeUsuario";
 
 function Dashboard() {
-  const [ Cards, setCards ] = useState([]);
+  const [ Cards, setCards ] = useState();
 
   useEffect(() => {
     (async () => {
@@ -35,12 +35,12 @@ function Dashboard() {
               <ComplexStatisticsCard
                 color="success"
                 icon="store"
-                title="Saldo Actual"
-                count={Cards != null ?Cards.saldo : 0}
+                title="Total Pagos"
+                count={Cards != null ?Cards.total : 0}
                 percentage={{
                   color: "success",
                   amount: "",
-                  label: "Saldo actual de la tienda",
+                  label: "Total Recaudados en las Tiendas",
                 }}
               />
             </MDBox>
@@ -48,13 +48,13 @@ function Dashboard() {
           <Grid item xs={12} md={6} lg={3}>
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
-                icon="thumb_up"
-                title="Total Pagos"
-                count={Cards != null ? Cards.transacciones : 0}
+                icon="house"
+                title="Total Tiendas"
+                count={Cards != null ? Cards.total_tienda : 0}
                 percentage={{
                   color: "success",
-                  amount: "",
-                  label: "Total de pagos clientes",
+                  amount: Cards != null ?Cards.total_accounts : 0,
+                  label: "accounts",
                 }}
               />
             </MDBox>
@@ -65,11 +65,11 @@ function Dashboard() {
                 color="success"
                 icon="autorenew"
                 title="Transaciones realizadas"
-                count={Cards != null ?Cards.transacciones_count : 0}
+                count={Cards != null ?Cards.total_transaciones : 0}
                 percentage={{
                   color: "success",
                   amount: "",
-                  label: "Total transacciones realiazadas",
+                  label:"Total transacciones tiendas"  ,
                 }}
               />
             </MDBox>
@@ -80,11 +80,11 @@ function Dashboard() {
                 color="primary"
                 icon="balance_wallet"
                 title="Recaudacion"
-                count={Cards != null ?Cards.recaudacion : 0}
+                count={Cards != null ?Cards.total_recaudado : 0}
                 percentage={{
                   color: "success",
                   amount: "",
-                  label: "Recaciones",
+                  label: "Recaudacion en las tiendas",
                 }}
               />
             </MDBox>
