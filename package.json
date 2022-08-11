@@ -39,7 +39,7 @@
     "web-vitals": "2.1.4",
     "yup": "0.32.11"
   },
-  "homepage": "https://rec.netbot.ec/",
+  "homepage": "https://rec.netbot.ec/admin/",
   "scripts": {
     "start": "react-scripts start",
     "build": "set \"CI=false\" && react-scripts build",
