@@ -18,16 +18,15 @@ import { host_io } from "function/util/global";
 import { dataCliente } from "function/localstore/storeUsuario";
 import axios from "axios";
 
-var socket;
-if (dataCliente() != null) {
-    // socket = io(`${dataCliente().host_whatsapp}`, {
-    //     transports: ["websocket", "polling"] // use WebSocket first, if available
-    //   })
-    socket = io(`${dataCliente().host_whatsapp}`, {
-        path: "/whatsapp_a1/",
-        transports: ["polling"] // use WebSocket first, if available
+var socket = null;
+if (dataCliente() != null && dataCliente().host_whatsapp !== '') {
+    console.log(dataCliente().host_whatsapp)
+    let path_1 = dataCliente().host_whatsapp.split("https://")[1].split("/")[0]
+    let path_2 = dataCliente().host_whatsapp.split("https://")[1].split("/")[1]
+    socket = io.connect(`https://${path_1}`, {
+        path: `/${path_2}/socket.io/socket.io.js`,
+        transports: ["websocket"] // use WebSocket first, if available
     });
-    // socket = io.connect(`${dataCliente().host_whatsapp}`);
 }
 
 function Whatsapp() {
@@ -38,27 +37,31 @@ function Whatsapp() {
     const [Numero, setNumero] = useState(dataCliente().username);
     const [conection, setconection] = useState(false);
 
-    useEffect(() => {
-        socket.on("conexion:", (data) => {
-            localStorage.setItem('user_navegador:', data)
-        });
-
-        socket.on('qr:', (data) => {
-            setqr(data)
-        })
-        socket.on('ready:', (data) => {
-            setready(data)
-            setqr(null)
-        })
-        socket.on('auth_failure:', (data) => {
-            setfailure(data)
-            setqr(null)
-        })
-        socket.on('authenticated:', (data) => {
-            setready(data)
-            setqr(null)
-        })
-    }, [socket]);
+    console.log(socket)
+    
+    // useEffect(() => {
+        if(socket != null){
+            socket.on("conexion:", (data) => {
+                localStorage.setItem('user_navegador:', data)
+            });
+    
+            socket.on('qr:', (data) => {
+                setqr(data)
+            })
+            socket.on('ready:', (data) => {
+                setready(data)
+                setqr(null)
+            })
+            socket.on('auth_failure:', (data) => {
+                setfailure(data)
+                setqr(null)
+            })
+            socket.on('authenticated:', (data) => {
+                setready(data)
+                setqr(null)
+            })
+        }
+    // }, [socket != null]);
 
     const handleResize = () => {
         setWidth(window.innerWidth);
@@ -80,12 +83,15 @@ function Whatsapp() {
 
     async function ExisteSesion() {
         try {
-            const { data } = await axios.get(`${dataCliente().host_whatsapp}/api/connect_estado`);
-            setconection(data)
+            if(dataCliente().host_whatsapp !== ''){
+                const { data } = await axios.get(`${dataCliente().host_whatsapp}/api/connect_estado`);
+                setconection(data)
+            }
         } catch (error) {
             console.log(error)
         }
     }
+
     useEffect(() => {
         ExisteSesion()
     }, [])
