@@ -18,9 +18,10 @@ import { host_io } from "function/util/global";
 import { dataCliente } from "function/localstore/storeUsuario";
 import axios from "axios";
 
-
-//const socket = io.connect(host_io);
-const socket = io.connect(`${dataCliente().host_whatsapp}`);
+var socket;
+if(dataCliente() != null){
+    socket = io.connect(`${dataCliente().host_whatsapp}`);
+}
 
 function Whatsapp() {
     const [width, setWidth] = useState();
