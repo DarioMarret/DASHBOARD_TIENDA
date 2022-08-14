@@ -19,8 +19,15 @@ import { dataCliente } from "function/localstore/storeUsuario";
 import axios from "axios";
 
 var socket;
-if(dataCliente() != null){
-    socket = io.connect(`${dataCliente().host_whatsapp}`);
+if (dataCliente() != null) {
+    // socket = io(`${dataCliente().host_whatsapp}`, {
+    //     transports: ["websocket", "polling"] // use WebSocket first, if available
+    //   })
+    socket = io(`${dataCliente().host_whatsapp}`, {
+        path: "/whatsapp_a1/",
+        transports: ["polling"] // use WebSocket first, if available
+    });
+    // socket = io.connect(`${dataCliente().host_whatsapp}`);
 }
 
 function Whatsapp() {
@@ -72,8 +79,12 @@ function Whatsapp() {
     }
 
     async function ExisteSesion() {
-        const { data } = await axios.get(`${dataCliente().host_whatsapp}/api/connect_estado`);
-        setconection(data)
+        try {
+            const { data } = await axios.get(`${dataCliente().host_whatsapp}/api/connect_estado`);
+            setconection(data)
+        } catch (error) {
+            console.log(error)
+        }
     }
     useEffect(() => {
         ExisteSesion()
@@ -87,7 +98,7 @@ function Whatsapp() {
                     <Grid item xs={12} sm={6} md={6} sx={{ textAlign: 'center', justifyContent: 'center' }}>
                         <MDBox p={3} lineHeight={1}>
                             <MDTypography variant="h5" fontWeight="medium">
-                                Configura Cuenta de Whatsapp 
+                                Configura Cuenta de Whatsapp
                             </MDTypography>
                         </MDBox>
                         <MDBox sx={{ width: '50%', display: 'flex', justifyContent: 'center' }}>
