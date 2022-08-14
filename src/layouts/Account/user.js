@@ -43,9 +43,9 @@ function User() {
     const dataTableData = {
         columns: [
             { Header: "#", accessor: "key", width: "10%" },
+            { Header: "accounts", accessor: "accounts", width: "20%" },
             { Header: "name", accessor: "username", width: "20%" },
             { Header: "perfil", accessor: "role", width: "20%" },
-            { Header: "accounts", accessor: "accounts", width: "20%" },
             { Header: "fecha ingreso", accessor: "fecha_registros", width: "20%" },
             { Header: "accion", accessor: "accion", width: "20%" },
         ],
@@ -81,7 +81,6 @@ function User() {
     function handleOpen2(id, item) {
         setOpen_2(!open_2);
         setEdit(item)
-        console.log(item)
     }
 
     function handleChange(event) {
@@ -195,7 +194,7 @@ function User() {
                     </div>
                     <div style={{ textAlign: 'right' }}>
                         <Button onClick={handleSubmit} >Save</Button>
-                        <Button>Cancel</Button>
+                        <Button onClick={()=>setOpen(!open)}>Cancel</Button>
                     </div>
                 </Box>
             </Modal>

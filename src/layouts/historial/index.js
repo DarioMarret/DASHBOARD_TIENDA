@@ -22,6 +22,7 @@ function Creditod() {
     columns: [
       { Header: "#", accessor: "key", width: "1%" },
       { Header: "Accounts", accessor: "accounts", width: "10%" },
+      { Header: "Responsable Recarga", accessor: "nombre_admin", width: "10%" },
       { Header: "Nombre Tienda", accessor: "nombre_tienda", width: "10%" },
       { Header: "Forma de pago", accessor: "forma_pago", width: "10%" },
       { Header: "Banco", accessor: "banco", width: "10%" },

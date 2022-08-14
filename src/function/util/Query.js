@@ -40,9 +40,9 @@ export const ListarAccounts = async (id) => {
     }
 }
 
-export const CreatedAccount = async (accounts) => {
+export const CreatedAccount = async (accounts, host) => {
     try {
-        const { data } = await axios.post(`${url}/api/accounts`, { accounts },
+        const { data } = await axios.post(`${url}/api/accounts`, { accounts, host },
             {
                 headers: {
                     'Content-Type': 'application/json',
@@ -52,6 +52,23 @@ export const CreatedAccount = async (accounts) => {
         return data.success ? true : false
     } catch (error) {
         console.warn(error);
+    }
+}
+
+export const UpdateAccount = async (accounts) => {
+    try {
+        delete accounts.accion
+        const { data } = await axios.put(`${url}/api/accounts/${accounts.id}`, accounts,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Basic YWRtaW46YWRtaW4=`
+                }
+            });
+            console.log(data)
+        return data.success ? true : false
+    } catch (error) {
+        console.error(error);
     }
 }
 

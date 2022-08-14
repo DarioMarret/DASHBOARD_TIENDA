@@ -4,6 +4,9 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import { useState, useEffect } from "react";
 import { ListarBanks, ListarWayPay, TiendaCedula, recharge, NumeroAleatorio } from "../../function/util/Query";
+import Swal from 'sweetalert2'
+import { dataCliente } from "function/localstore/storeUsuario";
+
 
 function RechargeStores() {
     const [width, setWidth] = useState();
@@ -35,12 +38,42 @@ function RechargeStores() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const response = await recharge({ ...tienda, transacion: NumeroAleatorio(), saldo, forma_pago: formaPago, banco: Banco });
-        if (response) {
-            alert("Transaccion exitosa");
-            limpiar()
+        if (saldo > 0) {
+            Swal.fire({
+                title: `Esta Seguro de recargar la cantidad de $${saldo}`,
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: 'Aceptar',
+            }).then( async (result) => {
+                if (result.isConfirmed) {
+                  const response = await recharge({ ...tienda, 
+                    transacion: NumeroAleatorio(), saldo, 
+                    forma_pago: formaPago, 
+                    banco: Banco, 
+                    nombre_admin: dataCliente().username 
+                });
+                  if (response) {
+                    limpiar()
+                    Swal.fire({
+                        title: 'Recarga Exitosa',
+                        text: 'La recarga se realizo correctamente',
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                      })
+                  }else{
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Do you want to continue',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                      })
+                  }
+              } else if (result.isDenied) {
+                Swal.fire('Cambiar Saldo', '', 'info')
+              }
+            })
         } else {
-            alert("Transaccion fallida");
+            Swal.fire('Saldo mayor a $0', '', 'info')
         }
     }
 
@@ -85,23 +118,6 @@ function RechargeStores() {
                     <TextField fullWidth label="Balance" id="saldo" name="saldo" value={saldo} onChange={(e) => setSaldo(e.target.value)} />
                     <RedBar />
                     <FormControl sx={{ minWidth: 120 }} fullWidth={true}>
-                        <InputLabel id="demo-simple-select-label">Bank</InputLabel>
-                        <Select
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            name="account_id"
-                            label="Banco"
-                            value={Banco}
-                            style={{ height: 50, width: '100%' }}
-                            onChange={(e) => setBanco(e.target.value)}
-                        >
-                            {
-                                banco != null ? banco.map((item, index) => <MenuItem key={index} value={item.banco}>{item.banco}</MenuItem>) : null
-                            }
-                        </Select>
-                    </FormControl>
-                    <RedBar />
-                    <FormControl sx={{ minWidth: 120 }} fullWidth={true}>
                         <InputLabel id="demo-simple-select-label">Way to pay</InputLabel>
                         <Select
                             labelId="demo-simple-select-label"
@@ -114,6 +130,23 @@ function RechargeStores() {
                         >
                             {
                                 forma != null ? forma.map((item, index) => <MenuItem key={index} value={item.forma_pago}>{item.forma_pago}</MenuItem>) : null
+                            }
+                        </Select>
+                    </FormControl>
+                    <RedBar />
+                    <FormControl sx={{ minWidth: 120 }} fullWidth={true}>
+                        <InputLabel id="demo-simple-select-label">Bank</InputLabel>
+                        <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            name="account_id"
+                            label="Banco"
+                            value={Banco}
+                            style={{ height: 50, width: '100%' }}
+                            onChange={(e) => setBanco(e.target.value)}
+                        >
+                            {
+                                banco != null ? banco.map((item, index) => <MenuItem key={index} value={item.banco}>{item.banco}</MenuItem>) : null
                             }
                         </Select>
                     </FormControl>

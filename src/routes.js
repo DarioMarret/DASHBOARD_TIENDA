@@ -10,6 +10,8 @@ import Icon from "@mui/material/Icon";
 import Creditod from "layouts/historial";
 import Account from "layouts/Account";
 import Store from "layouts/Store";
+import WhatsApp from "@mui/icons-material/WhatsApp";
+import Whatsapp from "layouts/whatsapp";
 
 const routes = [
   {
@@ -27,6 +29,14 @@ const routes = [
     icon: <DomainIcon />,
     route: "/business",
     component: <Account />,
+  },
+  {
+    type: "collapse",
+    name: "WhatsApp",
+    key: "whatsapp",
+    icon: <WhatsApp/>,
+    route: "/whatsapp_qr",
+    component: <Whatsapp />,
   },
   {
     type: "collapse",
@@ -52,6 +62,7 @@ const routes = [
     route: "/creditos",
     component: <Creditod />,
   },
+
   // {
   //   type: "collapse",
   //   name: "reset contraceña",
