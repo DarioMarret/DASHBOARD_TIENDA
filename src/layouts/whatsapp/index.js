@@ -19,6 +19,7 @@ import { dataCliente } from "function/localstore/storeUsuario";
 import axios from "axios";
 
 var socket = null;
+
 if (dataCliente() != null && dataCliente().host_whatsapp !== '') {
     console.log(dataCliente().host_whatsapp)
     let path_1 = dataCliente().host_whatsapp.split("https://")[1].split("/")[0]
@@ -28,6 +29,11 @@ if (dataCliente() != null && dataCliente().host_whatsapp !== '') {
         transports: ["websocket"] // use WebSocket first, if available
     });
 }
+
+// var socket = io.connect(host_io,{
+//     path: `/socket.io/socket.io.js`,
+//     transports: ["websocket"] // use WebSocket first, if available
+// })
 
 function Whatsapp() {
     const [width, setWidth] = useState();
@@ -85,7 +91,8 @@ function Whatsapp() {
         try {
             if(dataCliente().host_whatsapp !== ''){
                 const { data } = await axios.get(`${dataCliente().host_whatsapp}/api/connect_estado`);
-                setconection(data)
+                console.log(data)
+                setconection(data.success)
             }
         } catch (error) {
             console.log(error)
