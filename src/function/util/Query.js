@@ -42,7 +42,7 @@ export const ListarAccounts = async (id) => {
 
 export const CreatedAccount = async (accounts, host) => {
     try {
-        const { data } = await axios.post(`${url}/api/accounts`, { accounts, host },
+        const { data } = await axios.post(`${url}/api/accounts`, accounts,
             {
                 headers: {
                     'Content-Type': 'application/json',
