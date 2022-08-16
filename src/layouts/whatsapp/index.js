@@ -18,22 +18,22 @@ import { host_io } from "function/util/global";
 import { dataCliente } from "function/localstore/storeUsuario";
 import axios from "axios";
 
-// var socket = null;
+var socket = null;
 
-// if (dataCliente() != null && dataCliente().host_whatsapp !== '') {
-//     console.log(dataCliente().host_whatsapp)
-//     let path_1 = dataCliente().host_whatsapp.split("https://")[1].split("/")[0]
-//     let path_2 = dataCliente().host_whatsapp.split("https://")[1].split("/")[1]
-//     socket = io.connect(`https://${path_1}`, {
-//         path: `/${path_2}/socket.io/socket.io.js`,
-//         transports: ["websocket"] // use WebSocket first, if available
-//     });
-// }
+if (dataCliente() != null && dataCliente().host_whatsapp !== '') {
+    console.log(dataCliente().host_whatsapp)
+    let path_1 = dataCliente().host_whatsapp.split("https://")[1].split("/")[0]
+    let path_2 = dataCliente().host_whatsapp.split("https://")[1].split("/")[1]
+    socket = io.connect(`https://${path_1}`, {
+        path: `/${path_2}/socket.io/socket.io.js`,
+        transports: ["websocket"] // use WebSocket first, if available
+    });
+}
 
-var socket = io.connect("http://localhost:4000",{
-    path: `/socket.io/socket.io.js`,
-    transports: ["websocket"] // use WebSocket first, if available
-})
+// var socket = io.connect("http://localhost:4000",{
+//     path: `/socket.io/socket.io.js`,
+//     transports: ["websocket"] // use WebSocket first, if available
+// })
 
 function Whatsapp() {
     const [width, setWidth] = useState();
