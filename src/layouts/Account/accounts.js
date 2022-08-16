@@ -1,10 +1,9 @@
 /* eslint-disable eqeqeq */
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useState, useEffect } from 'react';
-import Card from "@mui/material/Card";
 import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
 
-import { Button, FormControl, Input, MenuItem, Modal, Select } from "@mui/material";
+import { Button, Input,  Modal } from "@mui/material";
 import { Box } from "@mui/system";
 import { CreatedAccount, deleteAccount, ListarAccounts, UpdateAccount } from '../../function/util/Query';
 import { dataCliente } from '../../function/localstore/storeUsuario';
