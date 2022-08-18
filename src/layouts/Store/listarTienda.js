@@ -61,7 +61,7 @@ function ListStore() {
             item['key'] = index + 1;
             item.accion = <>
                 <Button>
-                    <DeleteSweepIcon fontSize="large" onClick={() => console.log(item.id)} />
+                    <DeleteSweepIcon fontSize="large" onClick={() => Eliminar(item.id, item.nombre_tienda)} />
                 </Button>
                 <Button>
                     <EditNotifications onClick={() => handleOpen(item)} />
@@ -118,6 +118,43 @@ function ListStore() {
         }
 
     }
+
+    async function Eliminar(id, tienda) {
+        Swal.fire({
+            title: `Esta Seguro de Eliminar a la Tienda ${tienda}`,
+            showDenyButton: true,
+            showCancelButton: true,
+            confirmButtonText: 'Aceptar',
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                const { data } = await axios.delete(`https://rec.netbot.ec/v1/api/tiendas/${id}`, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Basic YWRtaW46YWRtaW4=`
+                    }
+                });
+                if (data.success) {
+                    setuserTienda(await ListarTiendas(dataCliente().id));
+                    Swal.fire({
+                        title: 'Tienda Eliminada',
+                        text: 'La tienda Fue Eliminada',
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    })
+                } else {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Lo Sentimos, ha ocurrido un error',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    })
+                }
+            } else if (result.isDenied) {
+                Swal.fire('Cancelando accion', '', 'info')
+            }
+        })
+    }
+
     useEffect(() => {
         (async () => {
             setuserTienda(await ListarTiendas(dataCliente().id));
