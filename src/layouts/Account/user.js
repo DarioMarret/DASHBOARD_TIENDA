@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 import { useState } from "react";
 import { useEffect } from "react";
 import { CrearUsuarioAdmin, EliminarUsuarioAdmin, ListarAccounts, ListarRole, ListarUsuariosAdmin, ResetAccount, ResetPassword } from "../../function/util/Query";
@@ -10,6 +11,7 @@ import { dataCliente } from "../../function/localstore/storeUsuario";
 import DataTable from "examples/Tables/DataTable";
 import MDTypography from "components/MDTypography";
 import MDBox from "components/MDBox";
+import Swal from 'sweetalert2'
 
 const style = {
     position: 'absolute',
@@ -57,7 +59,7 @@ function User() {
             item['key'] = index + 1;
             item.accion = <>
                 <Button>
-                    <DeleteSweepIcon fontSize="large" onClick={() => deleteUserAdmin(item.id)} />
+                    <DeleteSweepIcon fontSize="large" onClick={() => deleteUserAdmin(item.id, item.username)} />
                 </Button>
                 <Button>
                     <ModeEditIcon onClick={() => handleOpen2(item.id, item)} />
@@ -105,15 +107,39 @@ function User() {
         data != false ? setuserAdmin(await ListarUsuariosAdmin(dataCliente().id)) : alert("Error al crear usuario");
     }
 
-    async function deleteUserAdmin(id) {
-        const datos = await EliminarUsuarioAdmin(id)
-        if (datos) {
-            setuserAdmin(await ListarUsuariosAdmin(dataCliente().id))
-        }
+    async function deleteUserAdmin(id, username) {
+        Swal.fire({
+            title: `Esta Seguro de Eliminar al Usuario: ${username}`,
+            showDenyButton: true,
+            showCancelButton: true,
+            confirmButtonText: 'Aceptar',
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                const datos = await EliminarUsuarioAdmin(id)
+                if (datos) {
+                    setuserAdmin(await ListarUsuariosAdmin(dataCliente().id))
+                    Swal.fire({
+                        title: 'Usuario Eliminado',
+                        text: 'El usuario fue Eliminado',
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    })
+                } else {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Lo Sentimos, ha ocurrido un error',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    })
+                }
+            } else if (result.isDenied) {
+                Swal.fire('Cancelando accion', '', 'info')
+            }
+        })
     }
 
     async function resetPassword() {
-        if(edit != null && usr.password != ''){
+        if (edit != null && usr.password != '') {
             const datos = await ResetPassword(edit.id, usr.password)
             if (datos) {
                 setuserAdmin(await ListarUsuariosAdmin(dataCliente().id))
@@ -121,7 +147,7 @@ function User() {
         }
     }
     async function resetAccount() {
-        if(edit != null && accounts_id != 0){
+        if (edit != null && accounts_id != 0) {
             const datos = await ResetAccount(edit.id, accounts_id)
             if (datos) {
                 setuserAdmin(await ListarUsuariosAdmin(dataCliente().id))
@@ -131,18 +157,18 @@ function User() {
 
     return (
         <>
-                <MDBox p={3} lineHeight={1}>
-                    <MDTypography variant="h5" fontWeight="medium">
-                        Users administrator
-                    </MDTypography>
-                    <MDTypography variant="button" color="text">
-                        User assigned to accounts as administrator.
-                    </MDTypography>
-                    <Button onClick={handleOpen}>new users</Button>
-                </MDBox>
-                <DataTable
-                    table={dataTableData}
-                    canSearch />
+            <MDBox p={3} lineHeight={1}>
+                <MDTypography variant="h5" fontWeight="medium">
+                    Users administrator
+                </MDTypography>
+                <MDTypography variant="button" color="text">
+                    User assigned to accounts as administrator.
+                </MDTypography>
+                <Button onClick={handleOpen}>new users</Button>
+            </MDBox>
+            <DataTable
+                table={dataTableData}
+                canSearch />
             {/* MODAL NEW USERS */}
             <Modal
                 open={open}
@@ -194,7 +220,7 @@ function User() {
                     </div>
                     <div style={{ textAlign: 'right' }}>
                         <Button onClick={handleSubmit} >Save</Button>
-                        <Button onClick={()=>setOpen(!open)}>Cancel</Button>
+                        <Button onClick={() => setOpen(!open)}>Cancel</Button>
                     </div>
                 </Box>
             </Modal>
@@ -212,7 +238,7 @@ function User() {
                             Reset password:
                             <Input name="password" type="password" fullWidth={true} onChange={handleTextChange} />
                         </label>
-                        <Button variant="text" size="large" onClick={()=>resetPassword()} >Reset</Button>
+                        <Button variant="text" size="large" onClick={() => resetPassword()} >Reset</Button>
                     </div>
                     <div style={{ display: 'flex', alignSelf: 'center' }}>
                         <label>
@@ -230,7 +256,7 @@ function User() {
                         </label>
                         <div>
                             <br />
-                            <Button variant="text" size="large" onClick={()=>resetAccount()}>Reset</Button>
+                            <Button variant="text" size="large" onClick={() => resetAccount()}>Reset</Button>
                         </div>
                     </div>
                 </Box>
