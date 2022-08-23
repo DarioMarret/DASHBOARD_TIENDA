@@ -62,6 +62,14 @@ const routes = [
     route: "/creditos",
     component: <Creditod />,
   },
+  {
+    type: "collapse",
+    name: "Pre-registros",
+    key: "credito",
+    icon: <HistoryEduIcon />,
+    route: "/pre-registros",
+    component: <Creditod />,
+  },
 
   // {
   //   type: "collapse",
