@@ -351,3 +351,18 @@ export const UlmiasTransaciones = async (id) => {
         console.warn(error);
     }
 }
+
+export const ListarPre = async (id) => {
+    try {
+        const { data } = await axios.get(`${url}/api/preregistro/${id}`,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Basic YWRtaW46YWRtaW4=`
+                }
+            });
+        return data.success ? data.data : false
+    } catch (error) {
+        console.warn(error);
+    }
+}

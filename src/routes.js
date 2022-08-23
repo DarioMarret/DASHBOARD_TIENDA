@@ -12,6 +12,7 @@ import Account from "layouts/Account";
 import Store from "layouts/Store";
 import WhatsApp from "@mui/icons-material/WhatsApp";
 import Whatsapp from "layouts/whatsapp";
+import Pre from "layouts/Pre";
 
 const routes = [
   {
@@ -65,10 +66,10 @@ const routes = [
   {
     type: "collapse",
     name: "Pre-registros",
-    key: "credito",
+    key: "registros",
     icon: <HistoryEduIcon />,
     route: "/pre-registros",
-    component: <Creditod />,
+    component: <Pre />,
   },
 
   // {
