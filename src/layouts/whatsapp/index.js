@@ -92,8 +92,8 @@ function Whatsapp() {
     async function ExisteSesion() {
         try {
             if(dataCliente().host_whatsapp !== ''){
-                // const { data } = await axios.get(`${dataCliente().host_whatsapp}/api/connect_estado`);
-                const { data } = await axios.get(`http://localhost:4000/api/connect_estado`);
+                const { data } = await axios.get(`${dataCliente().host_whatsapp}/api/connect_estado`);
+                // const { data } = await axios.get(`http://localhost:4000/api/connect_estado`);
                 console.log(data)
                 setconection(data.success)
             }
